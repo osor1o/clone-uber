@@ -60,3 +60,6 @@ buck-out/
 
 # Android properties
 *secrets.properties
+
+# Environments Variables
+.env

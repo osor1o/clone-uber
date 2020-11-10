@@ -3,6 +3,7 @@ import {SafeAreaView, StatusBar} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import Search from './Search';
 import styles from './styles';
 
 export default () => {
@@ -46,6 +47,7 @@ export default () => {
         showsUserLocation
         loadingEnabled
       />
+      <Search />
     </SafeAreaView>
   );
 };
