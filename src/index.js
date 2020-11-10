@@ -7,7 +7,7 @@ import 'react-native-gesture-handler';
 export default () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="black" />
       <NavigationContainer>
         <Navigations />
       </NavigationContainer>
