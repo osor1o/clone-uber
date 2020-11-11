@@ -1,16 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Search from './Search';
 import Directions from './Directions';
+import {getPixelSize} from '../../utils';
+import markerImage from '../../assets/marker.png';
 import styles from './styles';
 
 export default () => {
+  const navigation = useNavigation();
+
   const [region, setRegion] = useState(null);
   const [destination, setDestination] = useState(null);
-  const navigation = useNavigation();
+
+  const mapViewRef = useRef(null);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -59,13 +64,30 @@ export default () => {
         style={styles.map}
         region={region}
         showsUserLocation
-        loadingEnabled>
+        loadingEnabled
+        ref={mapViewRef}>
         {destination && (
-          <Directions
-            origin={region}
-            destination={destination}
-            onReady={() => {}}
-          />
+          <>
+            <Directions
+              origin={region}
+              destination={destination}
+              onReady={(result) => {
+                mapViewRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: getPixelSize(24),
+                    left: getPixelSize(24),
+                    bottom: getPixelSize(24),
+                    top: getPixelSize(24),
+                  },
+                });
+              }}
+            />
+            <Marker
+              coordinate={destination}
+              anchor={{x: 0, y: 0}}
+              image={markerImage}
+            />
+          </>
         )}
       </MapView>
       <Search onLocationSelected={handleLocationSelected} />
