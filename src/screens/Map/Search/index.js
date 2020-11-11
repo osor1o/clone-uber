@@ -10,9 +10,7 @@ export default (props) => {
   return (
     <GooglePlacesAutocomplete
       placeholder="Para onde?"
-      onPress={(data, details) => {
-        console.log(data, details);
-      }}
+      onPress={onLocationSelected}
       query={{
         key: GOOGLE_MAPS_API_KEY,
         language: 'pt',
