@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
@@ -85,8 +85,21 @@ export default () => {
             <Marker
               coordinate={destination}
               anchor={{x: 0, y: 0}}
-              image={markerImage}
-            />
+              image={markerImage}>
+              <View style={styles.locationBox}>
+                <Text style={styles.locationText}>{destination.title}</Text>
+              </View>
+            </Marker>
+
+            <Marker coordinate={region} anchor={{x: 0, y: 0}}>
+              <View style={styles.locationBox}>
+                <View style={styles.locationTimeBox}>
+                  <Text style={styles.locationTimeText}>10</Text>
+                  <Text style={styles.locationTimeTextSmall}>MIN</Text>
+                </View>
+                <Text style={styles.locationText}>Test Region</Text>
+              </View>
+            </Marker>
           </>
         )}
       </MapView>
