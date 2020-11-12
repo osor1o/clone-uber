@@ -8,6 +8,7 @@ import Geocoder from 'react-native-geocoding';
 import Search from './Search';
 import Directions from './Directions';
 import Details from './Details';
+import Back from './Back';
 import {getPixelSize} from '../../utils';
 import markerImage from '../../assets/marker.png';
 import styles from './styles';
@@ -83,6 +84,10 @@ export default () => {
     });
   };
 
+  const handleBack = () => {
+    setDestination(null);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <MapView
@@ -129,7 +134,10 @@ export default () => {
       </MapView>
 
       {destination ? (
-        <Details />
+        <>
+          <Back onPress={handleBack} />
+          <Details />
+        </>
       ) : (
         <Search onLocationSelected={handleLocationSelected} />
       )}
