@@ -7,6 +7,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import Search from './Search';
 import Directions from './Directions';
+import Details from './Details';
 import {getPixelSize} from '../../utils';
 import markerImage from '../../assets/marker.png';
 import styles from './styles';
@@ -63,7 +64,7 @@ export default () => {
         edgePadding: {
           right: getPixelSize(24),
           left: getPixelSize(24),
-          bottom: getPixelSize(24),
+          bottom: getPixelSize(324),
           top: getPixelSize(24),
         },
       });
@@ -126,7 +127,12 @@ export default () => {
           </>
         )}
       </MapView>
-      <Search onLocationSelected={handleLocationSelected} />
+
+      {destination ? (
+        <Details />
+      ) : (
+        <Search onLocationSelected={handleLocationSelected} />
+      )}
     </SafeAreaView>
   );
 };
