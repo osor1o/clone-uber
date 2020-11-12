@@ -1,25 +1,37 @@
 import React, {useEffect, useState, useRef} from 'react';
+import {GOOGLE_MAPS_API_KEY} from 'react-native-dotenv';
 import {SafeAreaView, View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoding';
 import Search from './Search';
 import Directions from './Directions';
 import {getPixelSize} from '../../utils';
 import markerImage from '../../assets/marker.png';
 import styles from './styles';
 
+Geocoder.init(GOOGLE_MAPS_API_KEY);
+
 export default () => {
   const navigation = useNavigation();
 
   const [region, setRegion] = useState(null);
+  const [location, setLocation] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [readyResult, setReadyResult] = useState(null);
 
   const mapViewRef = useRef(null);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
-      ({coords: {latitude, longitude}}) => {
+      async ({coords: {latitude, longitude}}) => {
+        const response = await Geocoder.from({latitude, longitude});
+        const address = response.results[0].formatted_address;
+        const newLocation = address.substring(0, address.indexOf(','));
+
+        setLocation(newLocation);
+
         setRegion({
           latitude,
           longitude,
@@ -44,6 +56,19 @@ export default () => {
       },
     );
   }, [navigation]);
+
+  useEffect(() => {
+    if (readyResult) {
+      mapViewRef.current.fitToCoordinates(readyResult.mapCoordinates, {
+        edgePadding: {
+          right: getPixelSize(24),
+          left: getPixelSize(24),
+          bottom: getPixelSize(24),
+          top: getPixelSize(24),
+        },
+      });
+    }
+  }, [readyResult]);
 
   const handleLocationSelected = (data, {geometry}) => {
     const {
@@ -72,13 +97,9 @@ export default () => {
               origin={region}
               destination={destination}
               onReady={(result) => {
-                mapViewRef.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: getPixelSize(24),
-                    left: getPixelSize(24),
-                    bottom: getPixelSize(24),
-                    top: getPixelSize(24),
-                  },
+                setReadyResult({
+                  duration: Math.floor(result.duration),
+                  mapCoordinates: result.coordinates,
                 });
               }}
             />
@@ -94,10 +115,12 @@ export default () => {
             <Marker coordinate={region} anchor={{x: 0, y: 0}}>
               <View style={styles.locationBox}>
                 <View style={styles.locationTimeBox}>
-                  <Text style={styles.locationTimeText}>10</Text>
+                  <Text style={styles.locationTimeText}>
+                    {readyResult?.duration}
+                  </Text>
                   <Text style={styles.locationTimeTextSmall}>MIN</Text>
                 </View>
-                <Text style={styles.locationText}>Test Region</Text>
+                <Text style={styles.locationText}>{location}</Text>
               </View>
             </Marker>
           </>
