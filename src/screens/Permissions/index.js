@@ -1,7 +1,7 @@
 import React, {useEffect, useCallback} from 'react';
 import {View, PermissionsAndroid, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Button from '../../components/Button';
+import Button from './Button';
 import styles from './styles';
 
 export default () => {
