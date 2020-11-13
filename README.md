@@ -9,10 +9,10 @@
 
 ## Google Maps APIs
 
-- Google Maps SDK
-- Google Places
-- Google Geolocation
-- Google Geocoder
+- Maps SDK for Android
+- Geocoding API
+- Geolocation API
+- Places API
 
 ## Images
 
