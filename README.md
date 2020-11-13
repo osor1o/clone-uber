@@ -16,6 +16,6 @@
 
 ## Images
 
-![Print Mobile 1](assets/img/prints/1.jpg)
-![Print Mobile 2](assets/img/prints/2.jpg)
-![Print Mobile 3](assets/img/prints/3.jpg)
+![Print Mobile 1](src/assets/img/prints/1.jpg)
+![Print Mobile 2](src/assets/img/prints/2.jpg)
+![Print Mobile 3](src/assets/img/prints/3.jpg)
