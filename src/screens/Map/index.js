@@ -136,7 +136,7 @@ export default () => {
       {destination ? (
         <>
           <Back onPress={handleBack} />
-          <Details />
+          <Details minutes={readyResult?.duration} />
         </>
       ) : (
         <Search onLocationSelected={handleLocationSelected} />
