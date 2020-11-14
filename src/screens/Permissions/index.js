@@ -1,4 +1,5 @@
 import React, {useEffect, useCallback} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {View, PermissionsAndroid, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Button from './Button';
@@ -21,6 +22,8 @@ export default () => {
           },
         ],
       });
+    } else {
+      SplashScreen.hide();
     }
   }, [navigation]);
 

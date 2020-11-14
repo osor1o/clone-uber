@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {GOOGLE_MAPS_API_KEY} from 'react-native-dotenv';
 import {SafeAreaView, View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -26,6 +27,8 @@ export default () => {
   const mapViewRef = useRef(null);
 
   useEffect(() => {
+    SplashScreen.hide();
+
     Geolocation.getCurrentPosition(
       async ({coords: {latitude, longitude}}) => {
         const response = await Geocoder.from({latitude, longitude});
