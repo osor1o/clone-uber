@@ -120,11 +120,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-def getApiKey(){
-    def Properties props = new Properties()
-    props.load(new FileInputStream(new File('secrets.properties')))
-    return props['GOOGLE_MAPS_API_KEY']
-}
+def secretsPropertiesFile = rootProject.file("secrets.properties");
+def secretsProperties = new Properties()
+secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -140,7 +138,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [GOOGLE_MAPS_API_KEY:getApiKey()]
+        manifestPlaceholders = [GOOGLE_MAPS_API_KEY:secretsProperties['GOOGLE_MAPS_API_KEY']]
     }
     splits {
         abi {
@@ -157,6 +155,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file(secretsProperties['MYAPP_RELEASE_STORE_FILE'])
+            storePassword secretsProperties['MYAPP_RELEASE_STORE_PASSWORD']
+            keyAlias secretsProperties['MYAPP_RELEASE_KEY_ALIAS']
+            keyPassword secretsProperties['MYAPP_RELEASE_KEY_PASSWORD']
+        }
     }
     buildTypes {
         debug {
@@ -168,6 +172,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
 
