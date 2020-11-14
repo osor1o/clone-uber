@@ -27,8 +27,6 @@ export default () => {
   const mapViewRef = useRef(null);
 
   useEffect(() => {
-    SplashScreen.hide();
-
     Geolocation.getCurrentPosition(
       async ({coords: {latitude, longitude}}) => {
         const response = await Geocoder.from({latitude, longitude});
@@ -43,6 +41,8 @@ export default () => {
           latitudeDelta: 0.0143,
           longitudeDelta: 0.0134,
         });
+
+        SplashScreen.hide();
       },
       () => {
         navigation.reset({
