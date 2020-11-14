@@ -19,3 +19,5 @@
 ![Print Mobile 1](src/assets/prints/1.jpg)
 ![Print Mobile 2](src/assets/prints/2.jpg)
 ![Print Mobile 3](src/assets/prints/3.jpg)
+
+## Download APK (https://i.diawi.com/1zhp6V)
