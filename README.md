@@ -2,8 +2,6 @@
 
 ## Inspired by the project with updated libs: https://github.com/rocketseat-content/youtube-react-native-uber
 
-## Download APK (https://appsenjoy.com/zjMag)
-
 ## Technologies
 
 - React Native (https://facebook.github.io/react-native)
